@@ -46,6 +46,38 @@ All (user-defined) middleware are usually placed in:
 app/Http/Middleware
 #
 
+# Defining Middleware :
+
+To create a new middleware in Laravel, use the following command:
+
+`php artisan make:middleware EnsureTokenIsValid`
+
+This will create a file named EnsureTokenIsValid.php in the app/Http/Middleware directory.
+
+Here’s a simple example where we check if a request has a valid token:
+
+` <?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class EnsureTokenIsValid
+{
+    public function handle(Request $request, Closure $next): Response
+    {
+        if ($request->input('token') !== 'my-secret-token') {
+            return redirect('/home');
+        }
+
+        return $next($request);
+    }
+}
+`
+
+
 
 
 
